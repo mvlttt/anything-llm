@@ -390,7 +390,6 @@ function systemEndpoints(app) {
     [validatedRequest],
     async (request, response) => {
       try {
-        const { username, password } = reqBody(request);
         const multiUserModeEnabled = await SystemSettings.isMultiUserMode();
         if (multiUserModeEnabled) {
           response.status(200).json({
@@ -399,6 +398,7 @@ function systemEndpoints(app) {
           });
           return;
         }
+        const { username, password } = reqBody(request);
 
         const { user, error } = await User.create({
           username,
